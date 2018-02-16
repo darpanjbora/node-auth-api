@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for socialCops/routes/thumbnail.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">socialCops/routes/</a> thumbnail.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">48% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>12/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">16.67% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>12/24</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">var express = require('express');
+var jwt = require('jsonwebtoken');
+var request = require('request');
+var fs = require('fs');
+var path = require('path');
+var Jimp = require('jimp');
+&nbsp;
+&nbsp;
+var router = express.Router();
+&nbsp;
+/* Download an image from URL and resize it. */
+&nbsp;
+router.post('/', (req, res) =&gt; {
+&nbsp;
+    jwt.verify(req.cookies.authToken, 'secretKey', (err, authData) =&gt; {
+        if (<span class="missing-if-branch" title="else path not taken" >E</span>err) {
+            res.sendStatus(403);
+        } else {
+            if (<span class="cstat-no" title="statement not covered" >req.body.uri !== undefined) {</span>
+&nbsp;
+                var <span class="cstat-no" title="statement not covered" >response = res;</span>
+                uri = <span class="cstat-no" title="statement not covered" >req.body.uri;</span>
+&nbsp;
+                request.<span class="cstat-no" title="statement not covered" >head(uri, <span class="fstat-no" title="function not covered" >function(err, res, body) {</span></span>
+                    request(<span class="cstat-no" title="statement not covered" >uri).pipe(fs.createWriteStream('image.png')).on('close', () =&gt; {</span>
+                        Jimp.<span class="cstat-no" title="statement not covered" >read("image.png", <span class="fstat-no" title="function not covered" >function(err, image) {</span></span>
+                            console.<span class="cstat-no" title="statement not covered" >log("First");</span>
+                            if (<span class="cstat-no" title="statement not covered" >err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+                            image.<span class="cstat-no" title="statement not covered" >resize(256, 256) // resize</span>
+                                .quality(60) // set JPEG quality
+                                .write("image-small.png") // save
+                            console.<span class="cstat-no" title="statement not covered" >log("Sending file..");</span>
+                            response.<span class="cstat-no" title="statement not covered" >sendFile(path.join(__dirname, '../', 'image-small.png'))</span>
+&nbsp;
+                        });
+                    });
+                });
+            } else {
+                res.<span class="cstat-no" title="statement not covered" >sendStatus(400);</span>
+            }
+        }
+    })
+})
+&nbsp;
+module.exports = router;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 16 2018 18:41:56 GMT+0530 (IST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
