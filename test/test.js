@@ -1,17 +1,46 @@
-var request = require('supertest');
 var app = require('../app');
+var request = require('supertest');
+var requestApp = require('supertest')(app);
+var superagent = require('superagent');
+var agent = superagent.agent();
 var mocha = require('mocha');
+var jwt = require('jsonwebtoken');
+var expect = require('chai').expect;
 var describe = mocha.describe;
 var it = mocha.it;
+
+
+let token;
+
+describe("home", function() {
+    it("Should show the home page", function(done) {
+        request(app)
+            .get("/")
+            .expect(200)
+            .expect(/Welcome to SocialCops/, done)
+    })
+})
 
 describe("login", function() {
     it("Generates token for user for any username and password", function(done) {
         request(app)
             .post("/login")
             .send({ username: "root", password: "root" })
-            .expect(200, done)
+            .expect(200)
+            .then((res) => {
+                expect(res.body).to.have.property('Token');
+                jwt.verify(res.body.Token, 'secretKey', (err, decoded) => {
+                    expect(err).to.not.be.ok; // eslint-disable-line no-unused-expressions
+                    expect(decoded.user.username).to.equal("root");
+                    token = res.body.Token;
+                    agent.saveCookies(res);
+                    done();
+                });
+            })
+            .catch(done);
     })
 })
+
 
 describe("login", function() {
     it("Reject request if username and password is not available", function(done) {
@@ -51,21 +80,27 @@ describe("patch", function() {
     })
 })
 
-// describe("patch", function() {
-//     it("Accepts patch request if the authorization token is valid", function(done) {
-//         request(app)
-//             .post("/patch")
-//             .set('Cookie', ['authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiZGFycGFuTmV3IiwicGFzc3dvcmQiOiJkYXJwYW5OZXcifSwiaWF0IjoxNTE4NzgxMTYyLCJleHAiOjE1MTg3ODQ3NjJ9.sMsfyCrKiQ0OPdN9DyNkZIX5bpMqeCFpVBuxpAQU1Ec'])
-//             .send({ doc: { "baz": "qux", "foo": "bar" }, thePatch: [{ "op": "replace", "path": "/baz", "value": "boo" }] })
-//             .expect(200, done)
-//     })
-// })
+describe("patch", function() {
+    it("Rejects unauthorised patch request if both the doc and the patch are not passed", function(done) {
+        request(app)
+            .post("/patch")
+            .expect(403, done)
+    })
+})
 
 describe("thumbnail", function() {
     it("Reject thumbnail request if the token is not passed", function(done) {
         request(app)
             .post("/thumbnail")
             .send({ uri: "https://s7d2.scene7.com/is/image/PetSmart/PB1201_STORY_CARO-Authority-HealthyOutside-DOG-20160818?$PB1201$" })
+            .expect(403, done)
+    })
+})
+
+describe("thumbnail", function() {
+    it("Reject unauthorised thumbnail request if uri is not passed", function(done) {
+        request(app)
+            .post("/thumbnail")
             .expect(403, done)
     })
 })

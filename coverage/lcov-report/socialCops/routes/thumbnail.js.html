@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">48% </span>
+        <span class="strong">52.17% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>12/25</span>
+        <span class='fraction'>12/23</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">16.67% </span>
@@ -35,13 +35,13 @@
         <span class='fraction'>0/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">52.17% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>12/24</span>
+        <span class='fraction'>12/23</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -87,7 +87,29 @@
 42
 43
 44
-45</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -99,27 +121,49 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -141,34 +185,56 @@ var Jimp = require('jimp');
 &nbsp;
 var router = express.Router();
 &nbsp;
-/* Download an image from URL and resize it. */
-&nbsp;
+/**
+ * POST route to download an image
+ * from the public url provided in the request body.
+ * Returns a thumbnail of the same image by resizing it to 50x50 pixels.
+ */
 router.post('/', (req, res) =&gt; {
 &nbsp;
+    /* Verification of the token saved in cookies */
     jwt.verify(req.cookies.authToken, 'secretKey', (err, authData) =&gt; {
         if (<span class="missing-if-branch" title="else path not taken" >E</span>err) {
+&nbsp;
+            /* Failed verification results in 403 status code*/
             res.sendStatus(403);
+&nbsp;
         } else {
+&nbsp;
+            /* Checks for non-empty uri from the request body*/
             if (<span class="cstat-no" title="statement not covered" >req.body.uri !== undefined) {</span>
 &nbsp;
                 var <span class="cstat-no" title="statement not covered" >response = res;</span>
                 uri = <span class="cstat-no" title="statement not covered" >req.body.uri;</span>
 &nbsp;
+                /* Downloading the image from the public URL using request module and saving it as image.png*/
                 request.<span class="cstat-no" title="statement not covered" >head(uri, <span class="fstat-no" title="function not covered" >function(err, res, body) {</span></span>
                     request(<span class="cstat-no" title="statement not covered" >uri).pipe(fs.createWriteStream('image.png')).on('close', () =&gt; {</span>
+&nbsp;
+                        /** On successful downloading of the image Jimp library is used to resize it
+                         * JIMP - An image processing library for Node written entirely in JavaScript, 
+                         * with zero native dependencies.
+                         */
                         Jimp.<span class="cstat-no" title="statement not covered" >read("image.png", <span class="fstat-no" title="function not covered" >function(err, image) {</span></span>
-                            console.<span class="cstat-no" title="statement not covered" >log("First");</span>
-                            if (<span class="cstat-no" title="statement not covered" >err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+&nbsp;
+                            /*In case of error, returns 400 status code*/
+                            if (<span class="cstat-no" title="statement not covered" >err) {</span>
+                                res.<span class="cstat-no" title="statement not covered" >sendStatus(400);</span>
+                            }
+&nbsp;
+                            /*Otherwise image resizing takes place and the resized image is saved as image-small.png*/
                             image.<span class="cstat-no" title="statement not covered" >resize(256, 256) // resize</span>
                                 .quality(60) // set JPEG quality
                                 .write("image-small.png") // save
-                            console.<span class="cstat-no" title="statement not covered" >log("Sending file..");</span>
+&nbsp;
+                            /* Return the resized image */
                             response.<span class="cstat-no" title="statement not covered" >sendFile(path.join(__dirname, '../', 'image-small.png'))</span>
 &nbsp;
                         });
                     });
                 });
             } else {
+                /* Empty uri in the request body results in 400 status code */
                 res.<span class="cstat-no" title="statement not covered" >sendStatus(400);</span>
             }
         }
@@ -181,7 +247,7 @@ module.exports = router;</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 16 2018 18:41:56 GMT+0530 (IST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Feb 17 2018 13:12:48 GMT+0530 (IST)
 </div>
 </div>
 <script src="../../prettify.js"></script>
