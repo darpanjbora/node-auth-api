@@ -2,6 +2,7 @@
 A simple microservice in Node.js using express in ES6 with code coverage and JsonWebToken Authentication.
 
 [![Build Status](https://travis-ci.org/darpanjbora/node-auth-api.svg?branch=master)](https://travis-ci.org/darpanjbora/node-auth-api)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/darpanjbora/node-auth-api)
 ## OVERVIEW
 ### Public endpoints
 
