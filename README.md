@@ -1,6 +1,7 @@
 # node-auth-api
 A simple microservice in Node.js using express in ES6 with code coverage and JsonWebToken Authentication.
 
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=plastic)](https://github.com/darpanjbora/node-auth-api?branch=master)
 ## OVERVIEW
 ### Public endpoints
 
