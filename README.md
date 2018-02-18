@@ -29,6 +29,7 @@ __JWT GENERATED IN THE "LOGIN" ENDPOINT IS ATTACHED TO EACH REQUEST. AN INVALID 
 ## INSTALLATION 
 
 - Clone the repository `git clone https://github.com/darpanjbora/node-auth-api.git`
+- Install all dependecies `npm install`
 - Start the server `npm start`
 
 ## RUN THE APIs 
